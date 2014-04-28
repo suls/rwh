@@ -1,10 +1,7 @@
 module PrettyStub where
 
 import SimpleJSON
-
-data Doc = ToBeDefined
-    deriving (Show)
-
+import Prettify (Doc)
 
 text :: String -> Doc
 text str = undefined
@@ -20,3 +17,6 @@ a <> b = undefined
 
 hcat :: [Doc] -> Doc
 hcat = undefined
+
+fsep :: [Doc] -> Doc
+fsep xs = undefined
