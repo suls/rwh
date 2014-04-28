@@ -4,8 +4,7 @@ module PrettyJSON
     ) where
 
 import SimpleJSON
-import PrettyStub
-import Prettify (Doc)
+import Prettify (Doc, (<>), char, double, fsep, hcat, punctuate, text, compact, pretty)
 import Numeric (showHex)
 import Data.Bits (shiftR, (.&.))
 import Data.Char (ord)
@@ -19,7 +18,7 @@ renderJValue (JString str) = string str
 renderJValue (JArray ary)  = series '[' ']' renderJValue ary
 renderJValue (JObject obj) = series '{' '}' field obj
     where field (name, val) = string name
-                            <> text ":"
+                            <> text ": "
                             <> renderJValue val
 
 string :: String -> Doc
@@ -59,7 +58,3 @@ series :: Char -> Char -> (a -> Doc) -> [a] -> Doc
 series open close item = enclose open close
                        . fsep . punctuate (char ',') . map item
 
-punctuate :: Doc -> [Doc] -> [Doc]
-punctuate p []     = []
-punctuate p [d]    = [d]
-punctuate p (d:ds) = (d <> p) : punctuate p ds
